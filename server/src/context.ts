@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import * as trpc from '@trpc/server';
+import { PrismaClient } from "@prisma/client";
+import * as trpc from "@trpc/server";
 
 export const createContext = () => {
   const prisma = new PrismaClient();

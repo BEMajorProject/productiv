@@ -1,4 +1,4 @@
-import { shield, allow } from 'trpc-shield';
+import { shield, allow } from "trpc-shield";
 
 export const permissions = shield({
   query: {

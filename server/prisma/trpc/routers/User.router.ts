@@ -13,11 +13,12 @@ import { UserAggregateSchema } from "../schemas/aggregateUser.schema";
 import { UserGroupBySchema } from "../schemas/groupByUser.schema";
 
 export const usersRouter = createRouter()
-
   .query("findUniqueUser", {
     input: UserFindUniqueSchema,
     async resolve({ ctx, input }) {
-      const findUniqueUser = await ctx.prisma.user.findUnique({ where: input.where });
+      const findUniqueUser = await ctx.prisma.user.findUnique({
+        where: input.where,
+      });
       return findUniqueUser;
     },
   })
@@ -49,7 +50,9 @@ export const usersRouter = createRouter()
   .mutation("deleteOneUser", {
     input: UserDeleteOneSchema,
     async resolve({ ctx, input }) {
-      const deleteOneUser = await ctx.prisma.user.delete({ where: input.where });
+      const deleteOneUser = await ctx.prisma.user.delete({
+        where: input.where,
+      });
       return deleteOneUser;
     },
   })
@@ -57,7 +60,10 @@ export const usersRouter = createRouter()
   .mutation("updateOneUser", {
     input: UserUpdateOneSchema,
     async resolve({ ctx, input }) {
-      const updateOneUser = await ctx.prisma.user.update({ where: input.where, data: input.data });
+      const updateOneUser = await ctx.prisma.user.update({
+        where: input.where,
+        data: input.data,
+      });
       return updateOneUser;
     },
   })
@@ -81,7 +87,11 @@ export const usersRouter = createRouter()
   .mutation("upsertOneUser", {
     input: UserUpsertSchema,
     async resolve({ ctx, input }) {
-      const upsertOneUser = await ctx.prisma.user.upsert({ where: input.where, create: input.create, update: input.update });
+      const upsertOneUser = await ctx.prisma.user.upsert({
+        where: input.where,
+        create: input.create,
+        update: input.update,
+      });
       return upsertOneUser;
     },
   })
@@ -97,8 +107,14 @@ export const usersRouter = createRouter()
   .query("groupByUser", {
     input: UserGroupBySchema,
     async resolve({ ctx, input }) {
-      const groupByUser = await ctx.prisma.user.groupBy({ where: input.where, orderBy: input.orderBy, by: input.by, having: input.having, take: input.take, skip: input.skip });
+      const groupByUser = await ctx.prisma.user.groupBy({
+        where: input.where,
+        orderBy: input.orderBy,
+        by: input.by,
+        having: input.having,
+        take: input.take,
+        skip: input.skip,
+      });
       return groupByUser;
     },
-  })
-
+  });

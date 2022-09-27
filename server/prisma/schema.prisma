@@ -9,7 +9,7 @@ generator trpc {
 
 generator trpc_shield {
   provider = "prisma-trpc-shield-generator"
-  output = "./shield"
+  output   = "./shield"
 }
 
 datasource db {
