@@ -1,29 +1,20 @@
-import * as trpc from "@trpc/server";
 import { z } from "zod";
-import { Context } from "../../context";
 
-// [...]
+import { initTRPC } from "@trpc/server";
 
-export const appRouter = trpc
-  .router<Context>()
-  .query("hello", {
-    input: z
-      .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `hello ${input?.text ?? "world"}`,
-      };
-    },
-  })
-  .query("test", {
-    resolve() {
-      return {
-        message: "Karthik",
-      };
-    },
-  });
+export const t = initTRPC.create();
+
+export const appRouter = t.router({
+  meow: t.procedure.query(() => {
+    return { message: `Hello Mubin` };
+  }),
+  hello: t.procedure.input(z.object({ text: z.string() })).query((req) => {
+    return { message: `Hello ${req.input?.text || "Mubin"}` };
+  }),
+  getUser: t.procedure.input(z.string()).query((req) => {
+    req.input; // string
+    return { id: req.input, name: "Bilbo" };
+  }),
+});
 
 export type AppRouter = typeof appRouter;
