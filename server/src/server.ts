@@ -7,11 +7,7 @@ import config from "./config/index";
 import { Headers } from "./middleware/Headers";
 import Logger from "./middleware/Logger";
 import { appRouter } from "./trpc/routers";
-
-const createContext = ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions) => ({}); // no context
+import { createContext } from "./context";
 
 const app = express();
 

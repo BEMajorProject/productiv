@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { initTRPC } from "@trpc/server";
+import { prisma } from "../../db";
 
 export const t = initTRPC.create();
 
@@ -15,6 +16,10 @@ export const appRouter = t.router({
     req.input; // string
     return { id: req.input, name: "Bilbo" };
   }),
+  // was testing with my own db
+  // getAllMyQuestions: t.procedure.query(async () => {
+  //   return await prisma.pollQuestion.findMany();
+  // }),
 });
 
 export type AppRouter = typeof appRouter;
