@@ -269,7 +269,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.9.0", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.9.2":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
@@ -807,6 +807,19 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
+"@tanstack/query-core@4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.10.1.tgz#a587e39c28a905168bdf8a3906e36715c30ec083"
+  integrity sha512-UZRYzjgQSfYhQ+cJX0CspAbzutf8p93gR1xFjQuH3OYcb/7t3WnHkdb/qC9mbqrfWXN/JAbBTJlTU/XQHc5HbA==
+
+"@tanstack/react-query@^4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.10.1.tgz#baab36cf41362ed75a00ef0aa31e96e20a065124"
+  integrity sha512-6GaLYAsAu/4aX6HR4krpOej9qbKWXe0X0eccikpv5hAw4CoAAPG29Pydql1nTl9cYF2zd21unVm4yApklFY0AA==
+  dependencies:
+    "@tanstack/query-core" "4.10.1"
+    use-sync-external-store "^1.2.0"
+
 "@teamsupercell/typings-for-css-modules-loader@^2.5.1":
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@teamsupercell/typings-for-css-modules-loader/-/typings-for-css-modules-loader-2.5.1.tgz#9a8c5f9667de5edbc18a5e5d4c1a5c38a09ca004"
@@ -861,24 +874,20 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
-"@trpc/client@^9.27.0":
-  version "9.27.1"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-9.27.1.tgz#9bfbab4162c7ea157158c2c054141888fa706a1b"
-  integrity sha512-srh3s1ekhV5fssqxdE5DagcW+bnWUXp4LWkuHTunPDUL5BaIs6l0FXE4wKMv9AFAcCw7xJOFx8VSwFl/raXqKQ==
-  dependencies:
-    "@babel/runtime" "^7.9.0"
+"@trpc/client@^10.0.0-proxy-beta.15":
+  version "10.0.0-proxy-beta.15"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.0.0-proxy-beta.15.tgz#8045437847a14781ed6692d3cb407cde288f814b"
+  integrity sha512-qS3FzGA5jLjALBdG6+fo0dO+qrPvAJ4yzEU5NdyerFDireRvz0DxpX5nyCf3Y5qsFI2derEAcNtGbq/XZr9+ig==
 
-"@trpc/react@^9.27.0":
-  version "9.27.1"
-  resolved "https://registry.yarnpkg.com/@trpc/react/-/react-9.27.1.tgz#7bf1c6fe36c8f3e4faf5b3724bd5eda96c8736ce"
-  integrity sha512-EX7GaZWvzF9WoyBDfO+54wV52x1nr31hMhnZiEKsZFgchnzjpIkYg0Q4XfZ/Nz0Puyn0Wf6ksMChbTXd0cTqSg==
-  dependencies:
-    "@babel/runtime" "^7.9.0"
+"@trpc/react@^10.0.0-proxy-beta.15":
+  version "10.0.0-proxy-beta.15"
+  resolved "https://registry.yarnpkg.com/@trpc/react/-/react-10.0.0-proxy-beta.15.tgz#86accfb505e52f4f3816f368f615ec5940a1cffe"
+  integrity sha512-oSe8/1O3AeKryiYf5a/SOwjxZMLdCLmkJEX3tl97BQt/xbWht/xYVuuoYHbJjZLC8E4mkrj5fTF1JFTDg9t4oA==
 
-"@trpc/server@^9.27.0":
-  version "9.27.1"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-9.27.1.tgz#9bd364bf956b287922e25972ed5053d8c406def5"
-  integrity sha512-r/Fg3DuuYhIvXx5ZSmQ+VVyeV8kZ+N5aa6B7KkDg5wY+o7c1kDygCl+ZJ8XgwNg+yM2JPXPZxetWmyUw/YvWNQ==
+"@trpc/server@^10.0.0-proxy-beta.15":
+  version "10.0.0-proxy-beta.15"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.0.0-proxy-beta.15.tgz#7c69de41568cffaaeb823322f08cc15edea8a737"
+  integrity sha512-qG1qPT3PH9ylL6Bi82YIRVfD9J49mejCVt5E/Hw/ayoj635RI3GkRrTt2Q6MEE8n1yzlSB0KIUJ49F2s5SZ7Zg==
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -8733,6 +8742,11 @@ url-parse-lax@^3.0.0:
   integrity sha512-NjFKA0DidqPa5ciFcSrXnAltTtzz84ogy+NebPvfEgAck0+TNg4UJ4IN+fB7zRZfbgUf0syOo9MDxFkDSMuFaQ==
   dependencies:
     prepend-http "^2.0.0"
+
+use-sync-external-store@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 utf8-byte-length@^1.0.1:
   version "1.0.4"
