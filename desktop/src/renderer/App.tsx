@@ -1,5 +1,5 @@
 // import icon from '../../assets/icon.svg';
-import './App.css';
+import './App.global.css';
 
 import { useState } from 'react';
 import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
