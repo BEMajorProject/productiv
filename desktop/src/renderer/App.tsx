@@ -7,7 +7,8 @@ import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 
-import TestFetch from './components/TestFetch/TestFetch';
+// import TestFetch from './components/TestFetch/TestFetch';
+import MainHoc from './components/TestFetch/MainHoc/MainHoc';
 import trpc from './utils/trpc';
 
 const Hello = () => {
@@ -30,7 +31,8 @@ const Hello = () => {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <TestFetch />
+        {/* <TestFetch /> */}
+        <MainHoc />
       </QueryClientProvider>
     </trpc.Provider>
     // <div>
