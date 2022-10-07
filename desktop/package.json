@@ -1,7 +1,7 @@
 {
-  "name": "terner-desktop",
+  "name": "productiv",
   "version": "1.0.0",
-  "description": "terner-desktop",
+  "description": "productiv",
   "keywords": [
     "electron",
     "boilerplate",
@@ -171,8 +171,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Productiv",
+    "appId": "org.erb.Productiv",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
