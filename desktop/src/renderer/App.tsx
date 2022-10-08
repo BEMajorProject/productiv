@@ -1,4 +1,5 @@
 // import icon from '../../assets/icon.svg';
+import '@fontsource/raleway';
 import './App.global.css';
 
 import { useState } from 'react';
