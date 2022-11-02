@@ -1,71 +1,151 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { PrimaryButton, Text } from '@components';
-import { AddTask, Colors, Fonts, FontSize, hp, sharedStyles } from '@themes';
-import { TaskCard } from '@components';
-import Toast from 'react-native-toast-message';
-import { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ITask, RootStackParamList } from '@types';
-import { useAtom } from 'jotai';
-import { tasksAtom } from '@stores';
+import { ScrollView, StyleSheet, View } from "react-native";
+import { PrimaryButton, Text } from "@components";
+import { AddTask, Colors, Fonts, FontSize, hp, sharedStyles } from "@themes";
+import { TaskCard } from "@components";
+import Toast from "react-native-toast-message";
+import { useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ITask, RootStackParamList } from "@types";
+import { useAtom } from "jotai";
+import { tasksAtom } from "@stores";
+import { trpc } from "@utils/trpc";
 
-type TProps = NativeStackScreenProps<RootStackParamList, 'AddTask'>;
+type TProps = NativeStackScreenProps<RootStackParamList, "AddTask">;
 
 export const TaskManagerScreen: React.FC<TProps> = ({ navigation }) => {
   const [tasks, setTasks] = useAtom(tasksAtom);
+  const [isTaskUpdated, setIsTaskUpdated] = useState(false);
+
+  const fetchedTasks = trpc.getTasks.useQuery();
+  const client = trpc.useContext();
+  const { mutate } = trpc.deleteTask.useMutation({
+    onSuccess: ({ tasks }) => {
+      setTasks(
+        tasks.map((task) => {
+          return { ...task, dateTime: new Date(task.dateTime) };
+        }),
+      );
+      Toast.show({
+        type: "success",
+        text1: "Yoohoo!🥳",
+        text2: "Task completed!",
+        position: "bottom",
+      });
+    },
+  });
+
+  // useEffect(() => {
+  //   if (fetchedTasks.data){
+  //     setTasks(
+  //       fetchedTasks.data.tasks.map((task) => {
+  //         return { ...task, dateTime: new Date(task.dateTime) };
+  //       }),
+  //     );
+  //   }
+  // }, [fetchedTasks])
+
+  // useEffect(() => {
+  //   if (fetchedTasks.isStale)
+  // })
+
+  const refreshTaskHandler = async () => {
+    await fetchedTasks.refetch();
+    if (fetchedTasks.data) {
+      setTasks(
+        fetchedTasks.data.tasks.map((task) => {
+          return { ...task, dateTime: new Date(task.dateTime) };
+        }),
+      );
+    }
+    // client.invalidateQ();
+  };
+
+  useEffect(() => {
+    if (!fetchedTasks.isLoading && fetchedTasks.data && !isTaskUpdated) {
+      setTasks(
+        fetchedTasks.data.tasks.map((task) => {
+          return { ...task, dateTime: new Date(task.dateTime) };
+        }),
+      );
+      setIsTaskUpdated(true);
+    }
+  }, [isTaskUpdated, setTasks, fetchedTasks]);
+
+  if (!fetchedTasks.data || fetchedTasks.isRefetching)
+    return (
+      <View style={sharedStyles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
 
   const deleteTaskHandler = (taskId: string) => {
-    setTasks(tasks.filter(task => task.taskId !== taskId));
-    Toast.show({
-      type: 'success',
-      text1: 'Yoohoo!🥳',
-      text2: 'Task completed!',
-      position: 'bottom'
-    });
+    mutate(taskId);
   };
 
   const editTaskHandler = (taskId: string) => {
-    navigation.navigate('AddTask', {
-      mode: 'edit',
-      taskId
+    navigation.navigate("AddTask", {
+      mode: "edit",
+      taskId,
     });
   };
 
   return (
     <View style={styles.screen}>
       <Text style={sharedStyles.h3}>Hello Mubin!</Text>
-      <Text style={sharedStyles.h1}>Here's The Update.</Text>
-      <ScrollView style={styles.tasksContainer}>
-        {tasks.map(task => (
-          <TaskCard
-            task={task}
-            key={task.title}
-            onDeleteTask={deleteTaskHandler}
-            onEditTask={editTaskHandler}
-          />
-        ))}
-      </ScrollView>
+      <View style={styles.header}>
+        <Text style={sharedStyles.h1}>Here's The Update.</Text>
+        <PrimaryButton
+          title="Refresh"
+          style={{ backgroundColor: "white" }}
+          textStyle={{
+            color: "black",
+            fontFamily: Fonts.REGULAR,
+            fontSize: FontSize.small,
+          }}
+          onPress={refreshTaskHandler}
+        />
+      </View>
+
+      {tasks.length === 0 ? (
+        <View style={styles.tasksContainer}>
+          <View style={sharedStyles.loadingContainer}>
+            <Text>No tasks...Add one?</Text>
+          </View>
+        </View>
+      ) : (
+        <ScrollView style={styles.tasksContainer}>
+          {tasks.map((task) => (
+            <TaskCard
+              task={task}
+              key={task.title}
+              onDeleteTask={deleteTaskHandler}
+              onEditTask={editTaskHandler}
+            />
+          ))}
+        </ScrollView>
+      )}
+
       <PrimaryButton
-        title='Add Task'
+        title="Add Task"
         style={styles.addTaskButton}
         icon={<AddTask />}
-        onPress={() => navigation.navigate('AddTask', { mode: 'add' })}
+        onPress={() => navigation.navigate("AddTask", { mode: "add" })}
       />
       <View style={styles.navigationContainer}>
-        <PrimaryButton title='Today' textStyle={styles.navigationButtonText} />
+        <PrimaryButton title="Today" textStyle={styles.navigationButtonText} />
         <PrimaryButton
-          title='Upcoming'
+          title="Upcoming"
           textStyle={[
             styles.navigationButtonText,
-            styles.navigationNonActiveButtonText
+            styles.navigationNonActiveButtonText,
           ]}
           style={styles.navigationNonActiveButton}
         />
         <PrimaryButton
-          title='Done'
+          title="Done"
           textStyle={[
             styles.navigationButtonText,
-            styles.navigationNonActiveButtonText
+            styles.navigationNonActiveButtonText,
           ]}
           style={styles.navigationNonActiveButton}
         />
@@ -76,30 +156,35 @@ export const TaskManagerScreen: React.FC<TProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   screen: {
-    marginVertical: hp(12)
+    marginVertical: hp(12),
   },
   tasksContainer: {
     marginTop: hp(16),
-    height: hp(490)
+    height: hp(490),
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   addTaskButton: {
-    alignSelf: 'center',
-    marginTop: hp(12)
+    alignSelf: "center",
+    marginTop: hp(12),
   },
   navigationContainer: {
     marginTop: hp(12),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   navigationNonActiveButton: {
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
   },
   navigationNonActiveButtonText: {
-    color: Colors.black
+    color: Colors.black,
   },
   navigationButtonText: {
     fontFamily: Fonts.REGULAR,
-    fontSize: FontSize.medium
-  }
+    fontSize: FontSize.medium,
+  },
 });

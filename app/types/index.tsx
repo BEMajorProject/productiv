@@ -3,12 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
-  NavigatorScreenParams
-} from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 declare global {
   namespace ReactNavigation {
@@ -20,7 +20,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootDrawerParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  AddTask: { mode: 'edit' | 'add'; taskId?: string };
+  AddTask: { mode: "edit" | "add"; taskId?: string };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
